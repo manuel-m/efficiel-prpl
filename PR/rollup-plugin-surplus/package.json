@@ -1,0 +1,46 @@
+{
+  "_from": "git+https://github.com/manuel-m/rollup-plugin-surplus.git",
+  "_id": "rollup-plugin-surplus@0.5.0-beta4",
+  "_inBundle": false,
+  "_location": "/rollup-plugin-surplus",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "rollup-plugin-surplus@git+https://github.com/manuel-m/rollup-plugin-surplus.git",
+    "name": "rollup-plugin-surplus",
+    "escapedName": "rollup-plugin-surplus",
+    "rawSpec": "git+https://github.com/manuel-m/rollup-plugin-surplus.git",
+    "saveSpec": "git+https://github.com/manuel-m/rollup-plugin-surplus.git",
+    "fetchSpec": "https://github.com/manuel-m/rollup-plugin-surplus.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "git+https://github.com/manuel-m/rollup-plugin-surplus.git#91416aeab8c6eaafc584308bb69d0214cde14ce5",
+  "_spec": "rollup-plugin-surplus@git+https://github.com/manuel-m/rollup-plugin-surplus.git",
+  "_where": "/home/e0mmin/w/small_projects/efficiel_prpl",
+  "author": {
+    "name": "Adam Haile"
+  },
+  "bugs": {
+    "url": "https://github.com/adamhaile/rollup-plugin-surplus/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "rollup-pluginutils": "^1.5.0"
+  },
+  "deprecated": false,
+  "description": "A rollup plugin to compile Surplus JSX views",
+  "homepage": "https://github.com/adamhaile/rollup-plugin-surplus#readme",
+  "license": "MIT",
+  "name": "rollup-plugin-surplus",
+  "peerDependencies": {
+    "surplus": "^0.5.0-beta4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamhaile/rollup-plugin-surplus.git"
+  },
+  "version": "0.5.0-beta4"
+}
