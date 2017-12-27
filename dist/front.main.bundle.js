@@ -1,37 +1,101 @@
-!function() {
+var app = function(exports) {
     "use strict";
-    function insert(range, value) {
-        function insertArray(array) {
-            var i, len, value;
-            for (i = 0, len = array.length; i < len; i++) value = array[i], good === range.end ? value instanceof Node ? good = range.end = good.nextSibling ? parent.insertBefore(value, good.nextSibling) : parent.appendChild(value) : value instanceof Array ? insertArray(value) : null !== value && void 0 !== value && (value = document.createTextNode(value.toString()), 
-            good = range.end = good.nextSibling ? parent.insertBefore(value, good.nextSibling) : parent.appendChild(value)) : value instanceof Node ? (test !== value ? null === good ? (range.end === value && (range.end = value.previousSibling), 
-            parent.replaceChild(value, test), range.start = value, range.end === test && (range.end = value), 
-            test = value.nextSibling) : test.nextSibling === value && test !== value.nextSibling && test !== range.end ? (parent.removeChild(test), 
-            test = value.nextSibling) : (range.end === value && (range.end = value.previousSibling), 
-            parent.insertBefore(value, test)) : test = test.nextSibling, good = value) : value instanceof Array ? insertArray(value) : null !== value && void 0 !== value && (value = value.toString(), 
-            test.nodeType === TEXT_NODE ? (test.data = value, null === good && (range.start = test), 
-            test = (good = test).nextSibling) : (value = document.createTextNode(value), parent.insertBefore(value, test), 
-            null === good && (range.start = value), good = value));
+    function content(parent, value, current) {
+        var array, t = typeof value;
+        if (current === value) ; else if ("string" === t) current = parent.innerText = value; else if ("number" === t || "boolean" === t) value = value.toString(), 
+        current = parent.innerText = value; else if (null == value) clear(parent), current = ""; else if ("function" === t) S(function() {
+            current = content(parent, value(), current);
+        }); else if (value instanceof Node) Array.isArray(current) ? 0 === current.length ? parent.appendChild(value) : 1 === current.length ? parent.replaceChild(value, current[0]) : (clear(parent), 
+        parent.appendChild(value)) : "" === current ? parent.appendChild(value) : parent.replaceChild(value, parent.firstChild), 
+        current = value; else {
+            if (!Array.isArray(value)) throw new Error("content must be Node, stringable, or array of same");
+            0 === (array = normalizeIncomingArray([], value)).length ? clear(parent) : Array.isArray(current) ? 0 === current.length ? appendNodes(parent, array, 0, array.length) : reconcileArrays(parent, current, array) : "" === current ? appendNodes(parent, array, 0, array.length) : reconcileArrays(parent, [ parent.firstChild ], array), 
+            current = array;
         }
-        var parent = range.start.parentNode, test = range.start, good = null, t = typeof value;
-        for ("string" === t || "number" === t || "boolean" === t ? (value = value.toString(), 
-        test.nodeType === TEXT_NODE ? (test.data = value, good = test) : (value = document.createTextNode(value), 
-        parent.replaceChild(value, test), range.end === test && (range.end = value), range.start = good = value)) : value instanceof Node ? (test !== value && (parent.replaceChild(value, test), 
-        range.end === test && (range.end = value), range.start = value), good = value) : Array.isArray(value) ? insertArray(value) : value instanceof Function ? (S(function() {
-            insert(range, value());
-        }), good = range.end) : null !== value && void 0 !== value && (value = value.toString(), 
-        test.nodeType === TEXT_NODE ? (test.data = value, good = test) : (value = document.createTextNode(value), 
-        parent.replaceChild(value, test), range.end === test && (range.end = value), range.start = good = value)), 
-        null === good && (range.start === parent.firstChild && range.end === parent.lastChild && range.start !== range.end ? (parent.textContent = "", 
-        value = document.createTextNode(""), parent.appendChild(value), good = range.start = range.end = value) : test.nodeType === TEXT_NODE ? (test.data = "", 
-        good = test) : (value = document.createTextNode(""), parent.replaceChild(value, test), 
-        range.end === test && (range.end = value), range.start = good = value)); good !== range.end; ) test = range.end, 
-        range.end = test.previousSibling, parent.removeChild(test);
-        return range;
+        return current;
     }
-    function createTextNode(text, parent) {
-        var node = document.createTextNode(text);
-        return parent.appendChild(node), node;
+    function reconcileArrays(parent, ns, us) {
+        var i, j, k, ntext, src, utext, preserved, lcs, utexti, lcsj, ntextk, ulen = us.length, nmin = 0, nmax = ns.length - 1, umin = 0, umax = ulen - 1, n = ns[nmin], u = us[umin], nx = ns[nmax], ux = us[umax], ul = nx.nextSibling, loop = !0;
+        fixes: for (;loop; ) {
+            for (loop = !1; equable(u, n, umin, us); ) {
+                if (nmin++, ++umin > umax || nmin > nmax) break fixes;
+                u = us[umin], n = ns[nmin];
+            }
+            for (;equable(ux, nx, umax, us); ) {
+                if (ul = nx, nmax--, umin > --umax || nmin > nmax) break fixes;
+                ux = us[umax], nx = ns[nmax];
+            }
+            for (;equable(u, nx, umin, us); ) {
+                if (loop = !0, parent.insertBefore(nx, n), nmax--, ++umin > umax || nmin > nmax) break fixes;
+                u = us[umin], nx = ns[nmax];
+            }
+            for (;equable(ux, n, umax, us); ) {
+                if (loop = !0, null === ul ? parent.appendChild(n) : parent.insertBefore(n, ul), 
+                ul = n, nmin++, umin > --umax || nmin > nmax) break fixes;
+                ux = us[umax], n = ns[nmin];
+            }
+        }
+        if (umin > umax) for (;nmin <= nmax; ) parent.removeChild(ns[nmax]), nmax--; else if (nmin > nmax) for (;umin <= umax; ) insertOrAppend(parent, us[umin], ul, umin, us), 
+        umin++; else {
+            for (ntext = [], i = nmin, j = (nmin << RECONCILE_ARRAY_BITS) + (RECONCILE_ARRAY_BATCH = (RECONCILE_ARRAY_BATCH + 1) % RECONCILE_ARRAY_INC); i <= nmax; i++, 
+            j += RECONCILE_ARRAY_INC) void 0 === (n = ns[i]).__surplus_order ? Object.defineProperty(n, "__surplus_order", {
+                value: j,
+                writable: !0
+            }) : n.__surplus_order = j, n instanceof Text && ntext.push(i);
+            for (src = new Array(umax - umin + 1), utext = [], preserved = 0, i = umin; i <= umax; i++) "string" == typeof (u = us[i]) ? (utext.push(i), 
+            src[i - umin] = NOMATCH) : void 0 !== (j = u.__surplus_order) && (j & RECONCILE_ARRAY_MASK) === RECONCILE_ARRAY_BATCH ? (j >>= RECONCILE_ARRAY_BITS, 
+            src[i - umin] = j, ns[j] = null, preserved++) : src[i - umin] = NOMATCH;
+            if (0 !== preserved || 0 !== nmin || nmax !== ns.length - 1) {
+                for (lcs = function(ns) {
+                    var seq, is, l, pre, i, len, n, j;
+                    for (seq = [], is = [], l = -1, pre = new Array(ns.length), i = 0, len = ns.length; i < len; i++) (n = ns[i]) < 0 || (-1 !== (j = findGreatestIndexLEQ(seq, n)) && (pre[i] = is[j]), 
+                    j === l ? (seq[++l] = n, is[l] = i) : n < seq[j + 1] && (seq[j + 1] = n, is[j + 1] = i));
+                    for (i = is[l]; l >= 0; i = pre[i], l--) seq[l] = i;
+                    return seq;
+                }(src), i = 0; i < lcs.length; i++) src[lcs[i]] = NOINSERT;
+                for (utexti = 0, lcsj = 0, ntextk = 0, i = 0, j = 0, k = 0; i < utext.length; i++) {
+                    for (utexti = utext[i]; j < lcs.length && (lcsj = lcs[j]) < utexti - umin; ) j++;
+                    for (;k < ntext.length && (ntextk = ntext[k], 0 !== j) && ntextk < src[lcs[j - 1]]; ) k++;
+                    k < ntext.length && (j === lcs.length || ntextk < src[lcsj]) ? (n = ns[ntextk], 
+                    u = us[utexti], n.data !== u && (n.data = u), ns[ntextk] = null, us[utexti] = n, 
+                    src[utexti] = NOINSERT, k++) : us[utexti] = document.createTextNode(us[utexti]);
+                }
+                for (;nmin <= nmax; ) null !== (n = ns[nmin]) && parent.removeChild(n), nmin++;
+                for (;umin <= umax; ) ux = us[umax], src[umax - umin] !== NOINSERT && (null === ul ? parent.appendChild(ux) : parent.insertBefore(ux, ul)), 
+                ul = ux, umax--;
+            } else for (clear(parent); umin <= umax; ) insertOrAppend(parent, us[umin], null, umin, us), 
+            umin++;
+        }
+    }
+    function equable(u, n, i, us) {
+        return u === n || "string" == typeof u && n instanceof Text && (n.data !== u && (n.data = u), 
+        us[i] = n, !0);
+    }
+    function appendNodes(parent, array, i, end) {
+        for (var node; i < end; i++) (node = array[i]) instanceof Node ? parent.appendChild(node) : (node = array[i] = document.createTextNode(node), 
+        parent.appendChild(node));
+    }
+    function insertOrAppend(parent, node, marker, i, us) {
+        "string" == typeof node && (node = us[i] = document.createTextNode(node)), null === marker ? parent.appendChild(node) : parent.insertBefore(node, marker);
+    }
+    function normalizeIncomingArray(normalized, array) {
+        var i, len, item;
+        for (i = 0, len = array.length; i < len; i++) (item = array[i]) instanceof Node ? normalized.push(item) : null == item || (Array.isArray(item) ? normalizeIncomingArray(normalized, item) : "string" == typeof item ? normalized.push(item) : normalized.push(item.toString()));
+        return normalized;
+    }
+    function clear(node) {
+        node.textContent = "";
+    }
+    function findGreatestIndexLEQ(seq, n) {
+        var mid, lo = -1, hi = seq.length;
+        if (hi > 0 && seq[hi - 1] <= n) return hi - 1;
+        for (;hi - lo > 1; ) seq[mid = Math.floor((lo + hi) / 2)] > n ? hi = mid : lo = mid;
+        return lo;
+    }
+    function createElement(tag, className, parent) {
+        var el = document.createElement(tag);
+        return className && (el.className = className), parent && parent.appendChild(el), 
+        el;
     }
     function logRead(from, to) {
         var fromslot, toslot = null === to.source1 ? -1 : null === to.sources ? 0 : to.sources.length;
@@ -101,7 +165,10 @@
     function dispose(node) {
         node.fn = null, node.log = null, cleanup(node, !0);
     }
-    var Clock, DataNode, ComputationNode, Log, Queue, NOTPENDING, CURRENT, STALE, RUNNING, RootClock, RunningClock, RunningNode, Owner, UNOWNED, name, view, TEXT_NODE = 3, S = function(fn, value) {
+    function _home_message_onclic() {
+        vm.clic += 1, vm.message("Click me [" + vm.clic + "]");
+    }
+    var Clock, DataNode, ComputationNode, Log, Queue, NOTPENDING, CURRENT, STALE, RUNNING, RootClock, RunningClock, RunningNode, Owner, UNOWNED, vm, routes, _static, _dynamic, model = {}, NOMATCH = -1, NOINSERT = -2, RECONCILE_ARRAY_BATCH = 0, RECONCILE_ARRAY_BITS = 16, RECONCILE_ARRAY_INC = 1 << RECONCILE_ARRAY_BITS, RECONCILE_ARRAY_MASK = RECONCILE_ARRAY_INC - 1, S = function(fn, value) {
         var node, owner = Owner, running = RunningNode;
         return null === owner && console.warn("computations created without a root or parent will never be disposed"), 
         node = new ComputationNode(fn, value), Owner = RunningNode = node, null === RunningClock ? function(node) {
@@ -126,7 +193,7 @@
             return node.value;
         };
     };
-    Object.defineProperty(S, "default", {
+    return Object.defineProperty(S, "default", {
         value: S
     }), S.root = function(fn) {
         var owner = Owner, root = 0 === fn.length ? UNOWNED : new ComputationNode(null, null), result = void 0, disposer = 0 === fn.length ? null : function() {
@@ -226,18 +293,29 @@
         }, Queue;
     }(), NOTPENDING = {}, CURRENT = 0, STALE = 1, RUNNING = 2, RootClock = new Clock(), 
     RunningClock = null, RunningNode = null, Owner = null, UNOWNED = new ComputationNode(null, null), 
-    name = S.data("world beta!!"), view = function() {
-        var __, __insert2;
-        return createTextNode("Hello ", __ = function(tag, className, parent) {
-            var el = document.createElement(tag);
-            return className && (el.className = className), parent && parent.appendChild(el), 
-            el;
-        }("h1", null, null)), __insert2 = createTextNode("", __), createTextNode("!", __), 
-        S(function(__range) {
-            return insert(__range, name());
-        }, {
-            start: __insert2,
-            end: __insert2
-        }), __;
-    }(), document.body.appendChild(view);
-}();
+    vm = {
+        clic: 0,
+        route: "/",
+        message: S.data("Click me"),
+        views: {}
+    }, routes = {
+        home: function() {
+            return function() {
+                var __, __h11, __ul2;
+                return __ = createElement("div", null, null), (__h11 = createElement("h1", null, __)).onclick = _home_message_onclic, 
+                __ul2 = createElement("ul", null, __), S(function(__current) {
+                    return content(__h11, vm.message(), __current);
+                }, ""), S(function(__current) {
+                    return content(__ul2, [ "a", "b" ].map(function(v_) {
+                        return function() {
+                            var __;
+                            return content(__ = createElement("li", null, null), v_, ""), __;
+                        }();
+                    }), __current);
+                }, ""), __;
+            }();
+        }
+    }, _static = document.getElementById("app"), _dynamic = routes.home(), window.requestAnimationFrame(function() {
+        _static.parentNode.replaceChild(_dynamic, _static), _static = void 0;
+    }), exports.model = model, exports.routes = routes, exports.vm = vm, exports;
+}({});

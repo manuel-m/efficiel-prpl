@@ -6,7 +6,7 @@ var surplus = require('../PR/rollup-plugin-surplus/index'), // [!] Pull request 
 export default {
     input: './front.main.index.js',
     output: {
-        name: 'dr',
+        name: 'app',
         format: 'iife',
         file: '../dist/front.main.bundle.js'
     },

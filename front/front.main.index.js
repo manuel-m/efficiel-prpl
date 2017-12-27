@@ -1,6 +1,13 @@
-import * as Surplus from 'surplus';
-import S from 's-js';
+import model from './model';
+import routes from './routes';
+import vm from './views/vm';
 
-var name = S.data('world beta!!'),
-    view = <h1>Hello {name()}!</h1>;
-document.body.appendChild(view);
+var _static = document.getElementById('app'),
+    _dynamic = routes.home();
+
+window.requestAnimationFrame(function() {
+    _static.parentNode.replaceChild(_dynamic, _static);
+    _static = undefined;
+});
+
+export { model, routes, vm };
