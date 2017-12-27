@@ -1,10 +1,10 @@
 import S from 's-js';
 import * as Surplus from 'surplus';
-import routes from '../routes';
 
-var go = S.data('home'),
-    routerView = (function() {
-        return <div>{routes[go()]}</div>;
-    })();
+var go = S.data('home');
 
 export { go, routerView };
+
+function routerView(routes_) {
+    return <div>{routes_[go()]}</div>;
+}

@@ -1,10 +1,14 @@
-import app from './app';
+import { mount } from './app';
 
 import { go } from './router';
 import model from '../model';
-import routes from '../routes';
+
 import vm from './views/vm';
 
-app('app');
+import home from './views/home/home.jsx';
+
+var routes = { home: home() };
+
+mount({ mountId: 'app', routes: routes });
 
 export { go, model, routes, vm };
