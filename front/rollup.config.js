@@ -1,19 +1,37 @@
 var surplus = require('../PR/rollup-plugin-surplus/index'), // [!] Pull request in course
     eslint = require('rollup-plugin-eslint'),
     resolve = require('rollup-plugin-node-resolve'),
-    uglify = require('rollup-plugin-uglify'),
-    _tasks = [eslint(), surplus(), resolve({ extensions: ['.js', '.jsx'] })];
+    uglify = require('rollup-plugin-uglify');
 
-if (process.env.NODE_ENV === 'production') {
-    _tasks.push(uglify());
-}
-
-export default {
-    input: './front.main.index.js',
-    output: {
-        name: 'app',
-        format: 'iife',
-        file: '../dist/front.main.bundle.js'
+export default [
+    {
+        input: './main/main.index.js',
+        output: {
+            name: 'app',
+            format: 'iife',
+            file: '../dist/main.min.js'
+        },
+        plugins: tasks()
     },
-    plugins: _tasks
-};
+    {
+        input: './addons/addons.index.js',
+        output: {
+            format: 'iife',
+            file: '../dist/addons.min.js'
+        },
+        plugins: tasks()
+    }
+];
+
+// [!] don't share plugins instances
+function tasks() {
+    var _tasks = [
+        eslint(),
+        surplus(),
+        resolve({ extensions: ['.js', '.jsx'] })
+    ];
+    if (process.env.build === 'production') {
+        _tasks.push(uglify());
+    }
+    return _tasks;
+}

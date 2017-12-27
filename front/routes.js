@@ -1,5 +1,9 @@
-import home from './views/home/home.jsx';
+import home from './main/views/home/home.jsx';
 
-export default {
-    home: home
-};
+var routes = {};
+
+Object.assign(routes, {
+    home: home()
+});
+
+export default routes;

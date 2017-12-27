@@ -10,7 +10,7 @@ var fs = require('fs-extra'),
         fs.copySync('index.html', _dist_dir + '/index.html');
     },
     function FRONT_BUILD() {
-        _subshell('cd front && cross-env NODE_ENV=production rollup -c');
+        _subshell('cd front && rollup -c --environment build:production');
     }
 ].forEach(function(task_) {
     task_();
