@@ -4,11 +4,9 @@
     "description": "Minimal implementation of the PRPL pattern",
     "main": "index.js",
     "scripts": {
+        "dev": "rollup -c -w --environment build:dev",
         "build": "node ./build.js",
         "debug:devserver": "nodemon ./build/devserver.min.js",
-        "dev:devserver": "cd devserver && rollup -c -w",
-        "dev:front":
-            "node ./build.js && cd front && rollup -c -w --environment build:dev",
         "test": "node ./build/devserver.min.js"
     },
     "author": "Efficiel Technologie",

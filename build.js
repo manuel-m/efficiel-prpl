@@ -7,11 +7,8 @@ var fs = require('fs-extra'),
     function INSURE_DIST() {
         fs.ensureDirSync(_dist_dir);
     },
-    function FRONT_BUILD() {
-        shell('cd front && rollup -c --environment build:production');
-    },
-    function DEVSERVER_BUILD() {
-        shell('cd devserver && rollup -c');
+    function JS_BUILD() {
+        shell('rollup -c --environment build:production');
     },
     function PROCESS_INDEX_HTML() {
         var _critical_js = fread(_build_dir + '/critical.min.js'),
