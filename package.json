@@ -1,12 +1,13 @@
 {
     "name": "efficiel-prpl",
     "version": "0.0.1",
-    "description": "",
+    "description": "Minimal implementation of the PRPL pattern",
     "main": "index.js",
     "scripts": {
         "build": "node ./build.js",
-        "front:dev": "node ./build.js && cd front &&  rollup -c -w --environment build:dev",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "front:dev":
+            "node ./build.js && cd front &&  rollup -c -w --environment build:dev",
+        "test": "cd dist && python -m SimpleHTTPServer 8000"
     },
     "author": "Efficiel Technologie",
     "license": "MIT",

@@ -6,6 +6,11 @@ var model = {},
     vm = { clic: 0, route: '/', message: S.data('Click me') },
     routes = { home: home(Surplus, { go: go, model: model, vm: vm }) };
 
-main({ defaultRoute: 'home', mountId: 'app', routes: routes });
+main({
+    addonsScript: 'addons.min.js',
+    defaultRoute: 'home',
+    mountId: 'app',
+    routes: routes
+});
 
 export { S, Surplus, go, model, routes, vm }; // [!] for addons part

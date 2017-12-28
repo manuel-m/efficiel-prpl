@@ -1,4 +1,4 @@
-import addonsLauncher from './addonsLauncher';
+import { loadScript } from './script';
 import { routerView } from './router';
 
 function main(in_) {
@@ -11,7 +11,8 @@ function main(in_) {
     window.requestAnimationFrame(function() {
         _static.parentNode.replaceChild(_routerView, _static);
         _static = undefined;
-        setTimeout(addonsLauncher);
+
+        loadScript(in_.addonsScript);
     });
 }
 
