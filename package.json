@@ -5,18 +5,22 @@
     "main": "index.js",
     "scripts": {
         "build": "node ./build.js",
-        "front:dev":
-            "node ./build.js && cd front &&  rollup -c -w --environment build:dev",
-        "test": "cd dist && python -m SimpleHTTPServer 8000"
+        "debug:devserver": "nodemon ./build/devserver.min.js",
+        "dev:devserver": "cd devserver && rollup -c -w",
+        "dev:front":
+            "node ./build.js && cd front && rollup -c -w --environment build:dev",
+        "test": "node ./build/devserver.min.js"
     },
     "author": "Efficiel Technologie",
     "license": "MIT",
     "devDependencies": {
         "fs-extra": "^5.0.0",
+        "nodemon": "^1.14.3",
         "rollup": "^0.53.0",
         "rollup-plugin-eslint": "^4.0.0",
         "rollup-plugin-node-resolve": "^3.0.0",
-        "rollup-plugin-uglify": "^2.0.1"
+        "rollup-plugin-uglify": "^2.0.1",
+        "uglify-es": "^3.3.2"
     },
     "dependencies": {
         "s-js": "^0.4.7",

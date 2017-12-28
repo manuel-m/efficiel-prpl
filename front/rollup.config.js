@@ -1,7 +1,8 @@
 var surplus = require('../PR/rollup-plugin-surplus/index'), // [!] Pull request in course
     eslint = require('rollup-plugin-eslint'),
     resolve = require('rollup-plugin-node-resolve'),
-    uglify = require('rollup-plugin-uglify');
+    uglify = require('rollup-plugin-uglify'),
+    _outputDir = '../build';
 
 export default [
     {
@@ -9,7 +10,7 @@ export default [
         output: {
             name: 'app',
             format: 'iife',
-            file: '../build/critical.min.js'
+            file: _outputDir + '/critical.min.js'
         },
         plugins: tasks()
     },
@@ -18,7 +19,7 @@ export default [
         output: {
             name: 'app',
             format: 'iife',
-            file: '../dist/main.min.js'
+            file: _outputDir + '/main.min.js'
         },
         plugins: tasks()
     },
@@ -26,7 +27,7 @@ export default [
         input: './app/addons/index.js',
         output: {
             format: 'iife',
-            file: '../dist/addons.min.js'
+            file: _outputDir + '/addons.min.js'
         },
         plugins: tasks()
     }

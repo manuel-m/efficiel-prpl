@@ -10,12 +10,15 @@ var fs = require('fs-extra'),
     function FRONT_BUILD() {
         shell('cd front && rollup -c --environment build:production');
     },
+    function DEVSERVER_BUILD() {
+        shell('cd devserver && rollup -c');
+    },
     function PROCESS_INDEX_HTML() {
         var _critical_js = fread(_build_dir + '/critical.min.js'),
             _index_html = fread('index.html');
 
         fwrite(
-            _dist_dir + '/index.html',
+            _build_dir + '/index.html',
             _index_html.replace('/*@script*/', _critical_js)
         );
     }
