@@ -1,6 +1,8 @@
-import * as Surplus from 'surplus';
+// import * as Surplus from 'surplus';
 
-export default function _home_view(context_) {
+// console.log(Surplus);
+
+export default function _home_view(Surplus, context_) {
     var vm = context_.vm;
     return (
         <div>

@@ -1,6 +1,4 @@
-import * as Surplus from 'surplus';
-
-export default function _profile_view(context_) {
+export default function _profile_view(Surplus, context_) {
     return (
         <div>
             <pre>The profile view</pre>
