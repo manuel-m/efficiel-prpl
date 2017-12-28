@@ -5,7 +5,7 @@ var surplus = require('../PR/rollup-plugin-surplus/index'), // [!] Pull request 
 
 export default [
     {
-        input: './main/main.index.js',
+        input: './app/main/index.js',
         output: {
             name: 'app',
             format: 'iife',
@@ -14,7 +14,7 @@ export default [
         plugins: tasks()
     },
     {
-        input: './addons/addons.index.js',
+        input: './app/addons/index.js',
         output: {
             format: 'iife',
             file: '../dist/addons.min.js'
