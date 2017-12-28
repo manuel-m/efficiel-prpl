@@ -1,5 +1,4 @@
-import S from 's-js';
-import * as Surplus from 'surplus';
+import { S, Surplus } from './vendors';
 
 import { addons, main, shared } from './app';
 import { go, routerView } from './router';
