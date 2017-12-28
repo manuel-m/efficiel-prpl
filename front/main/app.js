@@ -1,7 +1,7 @@
 import addonsLauncher from './addonsLauncher';
 import { routerView } from './router';
 
-function _app_mount(in_) {
+function main(in_) {
     var _static = document.getElementById(in_.mountId),
         _routerView = routerView(in_.routes);
 
@@ -12,4 +12,4 @@ function _app_mount(in_) {
     });
 }
 
-export { _app_mount as mount };
+export { main };

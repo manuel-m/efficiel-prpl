@@ -1,14 +1,15 @@
-import { mount } from './app';
+import S from 's-js';
+
+import { main } from './app';
 
 import { go } from './router';
-import model from '../model';
-
-import vm from './views/vm';
 
 import home from './views/home/home.jsx';
 
-var routes = { home: home() };
+var model = {},
+    vm = { clic: 0, route: '/', message: S.data('Click me') },
+    routes = { home: home({ model: model, vm: vm }) };
 
-mount({ mountId: 'app', routes: routes });
+main({ mountId: 'app', routes: routes });
 
 export { go, model, routes, vm };
