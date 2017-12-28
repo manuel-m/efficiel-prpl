@@ -10,6 +10,6 @@ var model = {},
     vm = { clic: 0, route: '/', message: S.data('Click me') },
     routes = { home: home({ model: model, vm: vm }) };
 
-main({ mountId: 'app', routes: routes });
+main({ defaultRoute: 'home', mountId: 'app', routes: routes });
 
 export { go, model, routes, vm };

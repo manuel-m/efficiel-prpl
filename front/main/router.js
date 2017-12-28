@@ -5,6 +5,7 @@ var go = S.data('home');
 
 export { go, routerView };
 
-function routerView(routes_) {
+function routerView(defaultRoute_, routes_) {
+    go(defaultRoute_);
     return <div>{routes_[go()]}</div>;
 }
