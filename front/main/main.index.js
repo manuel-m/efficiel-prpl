@@ -1,8 +1,4 @@
-import S from 's-js';
-
-import { main } from './app';
-
-import { go } from './router';
+import { S, main, go } from '../lib';
 
 import home from './views/home/home.jsx';
 
