@@ -1,4 +1,5 @@
-import { S, Surplus } from './vendors';
+import S from 's-js';
+import * as Surplus from 'surplus';
 
 var go = S.data();
 

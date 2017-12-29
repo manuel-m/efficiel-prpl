@@ -71,6 +71,15 @@ export default [
                 minify // [!] uglify-es
             )
         ]
+    },
+    {
+        input: './front/app/js/3_play/index.js',
+        output: {
+            name: 'app',
+            format: 'iife',
+            file: _outputDir + '/play.min.js'
+        },
+        plugins: front_tasks()
     }
 ];
 

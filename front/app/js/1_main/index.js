@@ -1,4 +1,8 @@
-import { S, Surplus, main, go } from '../../../lib';
+import S from 's-js';
+import * as Surplus from 'surplus';
+
+import { main } from '../../../lib/app';
+import { go } from '../../../lib/router';
 
 import home from './views/home/home.jsx';
 
