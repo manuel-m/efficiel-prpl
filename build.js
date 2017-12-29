@@ -26,13 +26,17 @@ var fs = require('fs-extra'),
     },
     function INDEX_HTML_BUILD() {
         var _critical_js = fread(_build_dir + '/js/critical.min.js'),
-            _index_html = fread('index.html');
+            _index_html = fread('index.html'),
+            _play_js = fread(_build_dir + '/js/play.min.js');
 
         fwrite(
             _build_dir + '/index.html',
             _index_html.replace(
                 '<!-- @script -->',
-                '<script>' + _critical_js + '</script>'
+                [
+                    '<script>' + _critical_js + '</script>',
+                    '<script>' + _play_js + '</script>'
+                ].join('\n')
             )
         );
     }

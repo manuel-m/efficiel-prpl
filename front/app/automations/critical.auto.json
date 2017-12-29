@@ -1,6 +1,7 @@
 {
     "conf": {
-        "delay_ms": 1000
+        "delay_ms": 1000,
+        "max_fails": 5
     },
     "sequence": [
         "home.clickme.clic",
