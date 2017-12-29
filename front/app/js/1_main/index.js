@@ -1,4 +1,4 @@
-import { S, Surplus, main, go } from '../../lib';
+import { S, Surplus, main, go } from '../../../lib';
 
 import home from './views/home/home.jsx';
 

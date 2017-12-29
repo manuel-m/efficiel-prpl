@@ -1,4 +1,4 @@
-import { addons, shared } from '../../lib';
+import { addons, shared } from '../../../lib';
 
 import profile from './views/profile/profile';
 

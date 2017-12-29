@@ -8,7 +8,7 @@ var surplus = require('./PR/rollup-plugin-surplus/index'), // [!] Pull request i
 
 export default [
     {
-        input: './front/critical/index.js',
+        input: './front/app/js/0_critical/index.js',
         output: {
             name: 'app',
             format: 'iife',
@@ -17,7 +17,7 @@ export default [
         plugins: front_tasks()
     },
     {
-        input: './front/app/main/index.js',
+        input: './front/app/js/1_main/index.js',
         output: {
             name: 'app',
             format: 'iife',
@@ -26,7 +26,7 @@ export default [
         plugins: front_tasks()
     },
     {
-        input: './front/app/addons/index.js',
+        input: './front/app/js/2_addons/index.js',
         output: {
             format: 'iife',
             file: _outputDir + '/addons.min.js'
