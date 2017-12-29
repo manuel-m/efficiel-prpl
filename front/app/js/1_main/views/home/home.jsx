@@ -4,26 +4,24 @@ export default function _home_view(Surplus, context_) {
         <div class="container">
             <h1 onclick={_home_message_onclick}>{vm.message()}</h1>
 
-            <ul>
-                {['profile'].map(function(v_) {
-                    return (
-                        <li>
-                            <button
-                                onclick={function() {
-                                    context_.go(v_);
-                                }}
-                            >
-                                {v_}
-                            </button>
-                        </li>
-                    );
-                })}
-            </ul>
-
-            <p class="lead">
-                Basic grid layouts to get you familiar with building within the
-                Bootstrap grid system.
-            </p>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Home</h5>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and
+                        make up the bulk of the card's content.
+                    </p>
+                    <a
+                        href="#"
+                        class="btn btn-primary"
+                        onclick={function() {
+                            context_.go('profile');
+                        }}
+                    >
+                        Profile
+                    </a>
+                </div>
+            </div>
 
             <h3>Five grid tiers</h3>
             <p>

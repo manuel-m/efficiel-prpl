@@ -10,7 +10,7 @@ export default function _profile_view(Surplus, context_) {
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
                     </p>
-                    <pre>{JSON.stringify(context_, undefined, 1)}</pre>
+                    <pre>{JSON.stringify(context_, undefined, 2)}</pre>
                     <a
                         href="#"
                         class="btn btn-primary"
