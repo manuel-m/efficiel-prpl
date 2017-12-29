@@ -7,7 +7,7 @@ var model = {},
     routes = { home: home(Surplus, { go: go, model: model, vm: vm }) };
 
 main({
-    addonsScript: 'addons.min.js',
+    addonsScript: 'js/addons.min.js',
     defaultRoute: 'home',
     mountId: 'app',
     routes: routes

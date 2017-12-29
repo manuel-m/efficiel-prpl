@@ -22,10 +22,10 @@ var fs = require('fs-extra'),
         );
     },
     function JS_BUILD() {
-        shell('rollup -c --environment build:production');
+        shell('./node_modules/.bin/rollup -c --environment build:production');
     },
     function INDEX_HTML_BUILD() {
-        var _critical_js = fread(_build_dir + '/critical.min.js'),
+        var _critical_js = fread(_build_dir + '/js/critical.min.js'),
             _index_html = fread('index.html');
 
         fwrite(

@@ -11,7 +11,7 @@ server({
             process.argv.indexOf('-p') >= 0
                 ? process.argv[process.argv.indexOf('-p') + 1]
                 : 8000,
-        dir_dist: './build/',
+        dir_dist: './build',
         encoding: 'utf-8'
     },
     controllers: {}

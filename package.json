@@ -6,8 +6,8 @@
     "scripts": {
         "dev": "rollup -c -w --environment build:dev",
         "build": "node ./build.js",
-        "debug:devserver": "nodemon ./build/devserver.min.js",
-        "test": "node ./build/devserver.min.js"
+        "debug:devserver": "nodemon ./build/js/devserver.min.js",
+        "test": "node ./build/js/devserver.min.js"
     },
     "author": "Efficiel Technologie",
     "license": "MIT",

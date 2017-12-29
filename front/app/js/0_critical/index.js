@@ -1,3 +1,3 @@
 import { loadScriptOnDomReady } from '../../../lib/script';
 
-loadScriptOnDomReady('main.min.js');
+loadScriptOnDomReady('js/main.min.js');

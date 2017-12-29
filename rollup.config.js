@@ -4,7 +4,7 @@ var surplus = require('./PR/rollup-plugin-surplus/index'), // [!] Pull request i
     eslint = require('rollup-plugin-eslint'),
     resolve = require('rollup-plugin-node-resolve'),
     uglify = require('rollup-plugin-uglify'),
-    _outputDir = './build';
+    _outputDir = './build/js';
 
 export default [
     {
