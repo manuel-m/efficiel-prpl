@@ -1,0 +1,16 @@
+{
+    "conf": {
+        "delay_ms": 1000
+    },
+    "sequence": [
+        "home.clickme.clic",
+        "home.clickme.clic",
+        "home.clickme.clic",
+        "home.clickme.clic",
+        "home.profile.clic"
+    ],
+    "steps": {
+        "home.clickme.clic": "body > div > div > h1",
+        "home.profile.clic": "body > div > div > div.card > div > a"
+    }
+}

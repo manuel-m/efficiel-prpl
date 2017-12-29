@@ -4,10 +4,14 @@ var fs = require('fs-extra'),
     _dist_dir = 'dist';
 
 [
-    function INSURE_DIST() {
+    function CHECK_FOLDERS() {
+        fs.ensureDirSync(_build_dir);
         fs.ensureDirSync(_dist_dir);
     },
-    function ASSETS_COPY() {
+    function AUTOMATIONS_BUILD() {
+        fcopyDir('front/app/automations', _build_dir + '/automations');
+    },
+    function ASSETS_BUILD() {
         var _source = 'front/app/assets/css',
             _dest = _build_dir + '/assets/css';
         fs.ensureDirSync(_dest);
@@ -16,13 +20,11 @@ var fs = require('fs-extra'),
             [_source + '/bootstrap.css', _source + '/app.css'],
             _dest + '/style.css'
         );
-
-        // fcopyDir('front/app/assets', _build_dir + '/assets');
     },
     function JS_BUILD() {
         shell('rollup -c --environment build:production');
     },
-    function PROCESS_INDEX_HTML() {
+    function INDEX_HTML_BUILD() {
         var _critical_js = fread(_build_dir + '/critical.min.js'),
             _index_html = fread('index.html');
 
