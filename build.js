@@ -4,38 +4,42 @@ var fs = require('fs-extra'),
     dist_dir = 'dist';
 
 [
-    function CHECK_FOLDERS() {
-        fs.ensureDirSync(build_dir);
-        fs.ensureDirSync(dist_dir);
-    },
-    function AUTOMATIONS_BUILD() {
-        fcopyDir('front/app/automations', build_dir + '/automations');
-    },
-    function ASSETS_BUILD() {
-        var _source = 'front/app/assets/css',
-            _dest = build_dir + '/assets/css';
-        fs.ensureDirSync(_dest);
-
-        fconcat(
-            [_source + '/bootstrap.css', _source + '/app.css'],
-            _dest + '/style.css'
-        );
-    },
-    function JS_BUILD() {
-        shell('./node_modules/.bin/rollup -c --environment build:production');
-    },
-    ADMIN_INDEX_HTML_BUILD,
-    DEV_INDEX_HTML_BUILD,
-    USED_CSS_INDEX_HTML_BUILD
+    check_folders,
+    build_automation,
+    build_assets,
+    build_js,
+    build_admin_index,
+    build_dev_index,
+    build_used_css_index
 ].forEach(function(task_) {
     task_();
 });
 
-function ADMIN_INDEX_HTML_BUILD() {
+function check_folders() {
+    fs.ensureDirSync(build_dir);
+    fs.ensureDirSync(dist_dir);
+}
+
+function build_admin_index() {
     fs.copySync('front/tools/admin/index.html', build_dir + '/index.html');
 }
 
-function DEV_INDEX_HTML_BUILD() {
+function build_assets() {
+    var _source = 'front/app/assets/css',
+        _dest = build_dir + '/assets/css';
+    fs.ensureDirSync(_dest);
+
+    fconcat(
+        [_source + '/bootstrap.css', _source + '/app.css'],
+        _dest + '/style.css'
+    );
+}
+
+function build_automation() {
+    fcopyDir('front/app/automations', build_dir + '/automations');
+}
+
+function build_dev_index() {
     fwrite(
         build_dir + '/dev.index.html',
         fread('index.html').replace(
@@ -45,7 +49,11 @@ function DEV_INDEX_HTML_BUILD() {
     );
 }
 
-function USED_CSS_INDEX_HTML_BUILD() {
+function build_js() {
+    shell('./node_modules/.bin/rollup -c --environment build:production');
+}
+
+function build_used_css_index() {
     fwrite(
         build_dir + '/used_css.index.html',
         fread('index.html').replace(

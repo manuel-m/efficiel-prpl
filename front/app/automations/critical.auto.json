@@ -1,15 +1,9 @@
 {
     "conf": {
-        "delay_ms": 1000,
+        "delay_ms": 400,
         "max_fails": 5
     },
-    "sequence": [
-        "home.clickme.clic",
-        "home.clickme.clic",
-        "home.clickme.clic",
-        "home.clickme.clic",
-        "home.profile.clic"
-    ],
+    "sequence": ["home.clickme.clic", "home.profile.clic", ".wait"],
     "steps": {
         "home.clickme.clic": "body > div > div > h1",
         "home.profile.clic": "body > div > div > div.card > div > a"
