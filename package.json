@@ -4,7 +4,7 @@
     "description": "Minimal implementation of the PRPL pattern",
     "main": "index.js",
     "scripts": {
-        "dev": "rollup -c -w --environment build:dev",
+        "dev": "node ./build.js && rollup -c -w --environment build:dev",
         "build": "node ./build.js",
         "debug:devserver": "nodemon ./build/js/devserver.js",
         "test": "node ./build/js/devserver.js"

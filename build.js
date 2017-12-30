@@ -24,39 +24,15 @@ var fs = require('fs-extra'),
     function JS_BUILD() {
         shell('./node_modules/.bin/rollup -c --environment build:production');
     },
+    ADMIN_INDEX_HTML_BUILD,
     DEV_INDEX_HTML_BUILD,
     USED_CSS_INDEX_HTML_BUILD
 ].forEach(function(task_) {
     task_();
 });
 
-function fconcat(sources_, destination_) {
-    var _concat = '';
-    sources_.forEach(function(source_) {
-        _concat += fread(source_);
-    });
-    fwrite(destination_, _concat);
-}
-
-function fcopyDir(source_, destination_) {
-    fs.removeSync(destination_);
-    fs.copySync(source_, destination_);
-}
-
-function fread(path_) {
-    return fs.readFileSync(path_).toString();
-}
-
-function fwrite(path_, string_) {
-    fs.writeFileSync(path_, string_, function(err_) {
-        if (err_) {
-            return console.log(err_);
-        }
-    });
-}
-
-function shell(cmd_) {
-    child_process.execSync(cmd_, { stdio: 'inherit' });
+function ADMIN_INDEX_HTML_BUILD() {
+    fs.copySync('front/tools/admin/index.html', build_dir + '/index.html');
 }
 
 function DEV_INDEX_HTML_BUILD() {
@@ -94,4 +70,32 @@ function USED_CSS_INDEX_HTML_BUILD() {
     //         ].join('\n')
     //     )
     // );
+}
+function fconcat(sources_, destination_) {
+    var _concat = '';
+    sources_.forEach(function(source_) {
+        _concat += fread(source_);
+    });
+    fwrite(destination_, _concat);
+}
+
+function fcopyDir(source_, destination_) {
+    fs.removeSync(destination_);
+    fs.copySync(source_, destination_);
+}
+
+function fread(path_) {
+    return fs.readFileSync(path_).toString();
+}
+
+function fwrite(path_, string_) {
+    fs.writeFileSync(path_, string_, function(err_) {
+        if (err_) {
+            return console.log(err_);
+        }
+    });
+}
+
+function shell(cmd_) {
+    child_process.execSync(cmd_, { stdio: 'inherit' });
 }
