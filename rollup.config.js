@@ -7,36 +7,53 @@ var surplus = require('./PR/rollup-plugin-surplus/index'), // [!] Pull request i
     _outputDir = './build/js';
 
 export default [
-    {
+    APP_CRITICAL_JS(),
+    APP_MAIN_JS(),
+    APP_ADDONS_JS(),
+    DEVSERVER_JS(),
+    TOOL_USED_CSS()
+];
+
+function APP_CRITICAL_JS() {
+    return {
         input: './front/app/js/0_critical/index.js',
         output: {
             name: 'app',
             format: 'iife',
-            file: _outputDir + '/critical.min.js'
+            file: _outputDir + '/app.critical.js'
         },
         plugins: front_tasks()
-    },
-    {
+    };
+}
+
+function APP_ADDONS_JS() {
+    return {
+        input: './front/app/js/2_addons/index.js',
+        output: {
+            format: 'iife',
+            file: _outputDir + '/app.addons.js'
+        },
+        plugins: front_tasks()
+    };
+}
+
+function APP_MAIN_JS() {
+    return {
         input: './front/app/js/1_main/index.js',
         output: {
             name: 'app',
             format: 'iife',
-            file: _outputDir + '/main.min.js'
+            file: _outputDir + '/app.main.js'
         },
         plugins: front_tasks()
-    },
-    {
-        input: './front/app/js/2_addons/index.js',
-        output: {
-            format: 'iife',
-            file: _outputDir + '/addons.min.js'
-        },
-        plugins: front_tasks()
-    },
-    {
+    };
+}
+
+function DEVSERVER_JS() {
+    return {
         input: './devserver/index.js',
         output: {
-            file: _outputDir + '/devserver.min.js',
+            file: _outputDir + '/devserver.js',
             format: 'cjs',
             name: 'devserver'
         },
@@ -71,17 +88,20 @@ export default [
                 minify // [!] uglify-es
             )
         ]
-    },
-    {
-        input: './front/app/js/3_play/index.js',
+    };
+}
+
+function TOOL_USED_CSS() {
+    return {
+        input: './front/tools/used_css/js/index.js',
         output: {
-            name: 'app',
+            name: 'used_css',
             format: 'iife',
-            file: _outputDir + '/play.min.js'
+            file: _outputDir + '/tool.used_css.js'
         },
         plugins: front_tasks()
-    }
-];
+    };
+}
 
 // [!] don't share plugins instances
 function front_tasks() {

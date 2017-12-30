@@ -1,19 +1,19 @@
 var fs = require('fs-extra'),
     child_process = require('child_process'),
-    _build_dir = 'build',
-    _dist_dir = 'dist';
+    build_dir = 'build',
+    dist_dir = 'dist';
 
 [
     function CHECK_FOLDERS() {
-        fs.ensureDirSync(_build_dir);
-        fs.ensureDirSync(_dist_dir);
+        fs.ensureDirSync(build_dir);
+        fs.ensureDirSync(dist_dir);
     },
     function AUTOMATIONS_BUILD() {
-        fcopyDir('front/app/automations', _build_dir + '/automations');
+        fcopyDir('front/app/automations', build_dir + '/automations');
     },
     function ASSETS_BUILD() {
         var _source = 'front/app/assets/css',
-            _dest = _build_dir + '/assets/css';
+            _dest = build_dir + '/assets/css';
         fs.ensureDirSync(_dest);
 
         fconcat(
@@ -24,22 +24,8 @@ var fs = require('fs-extra'),
     function JS_BUILD() {
         shell('./node_modules/.bin/rollup -c --environment build:production');
     },
-    function INDEX_HTML_BUILD() {
-        var _critical_js = fread(_build_dir + '/js/critical.min.js'),
-            _index_html = fread('index.html'),
-            _play_js = fread(_build_dir + '/js/play.min.js');
-
-        fwrite(
-            _build_dir + '/index.html',
-            _index_html.replace(
-                '<!-- @script -->',
-                [
-                    '<script>' + _critical_js + '</script>',
-                    '<script>' + _play_js + '</script>'
-                ].join('\n')
-            )
-        );
-    }
+    DEV_INDEX_HTML_BUILD,
+    USED_CSS_INDEX_HTML_BUILD
 ].forEach(function(task_) {
     task_();
 });
@@ -71,4 +57,41 @@ function fwrite(path_, string_) {
 
 function shell(cmd_) {
     child_process.execSync(cmd_, { stdio: 'inherit' });
+}
+
+function DEV_INDEX_HTML_BUILD() {
+    fwrite(
+        build_dir + '/dev.index.html',
+        fread('index.html').replace(
+            '<!-- @script -->',
+            '<script src="js/app.critical.js"></script>'
+        )
+    );
+}
+
+function USED_CSS_INDEX_HTML_BUILD() {
+    fwrite(
+        build_dir + '/used_css.index.html',
+        fread('index.html').replace(
+            '<!-- @script -->',
+            ['app.critical.js', 'tool.used_css.js'].reduce(function(s_, file_) {
+                return s_ + '<script src="/js/' + file_ + '">' + '</script>';
+            }, '')
+        )
+    );
+
+    // var _critical_js = fread(_build_dir + '/js/app.critical.js'),
+    //     _index_html = fread('index.html'),
+    //     _play_js = fread(_build_dir + '/js/tool.used_css.js');
+
+    // fwrite(
+    //     _build_dir + '/index.html',
+    //     _index_html.replace(
+    //         '<!-- @script -->',
+    //         [
+    //             '<script>' + _critical_js + '</script>',
+    //             '<script>' + _play_js + '</script>'
+    //         ].join('\n')
+    //     )
+    // );
 }
