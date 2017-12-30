@@ -1,9 +1,11 @@
+import cssCtrl from './app/css.ctrl';
+
 import server from './lib/index';
 
 server({
     api: {
-        filter: function(request) {
-            return false;
+        filter: function(req_) {
+            return req_.url.indexOf('/build') === 0;
         }
     },
     conf: {
@@ -14,5 +16,5 @@ server({
         dir_dist: './build',
         encoding: 'utf-8'
     },
-    controllers: {}
+    controllers: { cssCtrl }
 });

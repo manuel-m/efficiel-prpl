@@ -1,11 +1,11 @@
-import { clone } from '../../../lib/utils';
+import { clone } from '../../../../common/lib/utils';
 
 export { Used_CSS_extractor };
 
 function Used_CSS_extractor() {
     var _all = [],
-        _not_used = [],
-        _used = [];
+        not_used = [],
+        used = [];
 
     return {
         onStart: onStart,
@@ -32,7 +32,7 @@ function Used_CSS_extractor() {
                     });
                 }
             }
-            _not_used = clone(_all);
+            not_used = clone(_all);
             resolve();
         });
     }
@@ -46,12 +46,12 @@ function Used_CSS_extractor() {
 
             while (_extractedCount !== 0) {
                 _extractedCount = 0;
-                _not_used.forEach(function(cssRule_, index_) {
+                not_used.forEach(function(cssRule_, index_) {
                     var _found = document.querySelector(cssRule_.selectorText);
                     if (_found !== null) {
                         _extractedCount += 1;
-                        _used.push(clone(cssRule_));
-                        _not_used.splice(index_, 1);
+                        used.push(clone(cssRule_));
+                        not_used.splice(index_, 1);
                     }
                 });
                 if (_extractedCount > 0) {
@@ -66,9 +66,13 @@ function Used_CSS_extractor() {
     }
 
     function onEnd(automation) {
-        return new Promise(function(resolve, reject) {
-            console.log(_used);
-            resolve();
+        return fetch('build/css', {
+            method: 'PUT',
+            body: JSON.stringify({ used, not_used })
+        }).then(function() {
+            setTimeout(function() {
+                location.href = 'index.html';
+            }, automation.conf.delay_ms);
         });
     }
 }
