@@ -4,9 +4,7 @@ import server from './lib/index';
 
 server({
     api: {
-        filter: function(req_) {
-            return req_.url.indexOf('/build') === 0;
-        }
+        filter: req_ => req_.url.indexOf('/build') === 0
     },
     conf: {
         port:

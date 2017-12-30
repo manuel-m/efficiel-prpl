@@ -1,16 +1,25 @@
 var http = require('http');
 
-import RouterStatic from './router.static';
-import RouterApi from './router.api';
+import { conf, controllers } from './shared';
+
+import assets from './assets';
+import rest from './rest';
+
+var _api_conf;
 
 export default function(in_) {
-    var _api = RouterApi(in_.conf, in_.controllers),
-        _static = RouterStatic(in_.conf);
+    Object.assign(conf, in_.conf);
+    Object.assign(controllers, in_.controllers);
 
-    http.createServer(_server_response).listen(in_.conf.port);
+    _api_conf = in_.api;
 
-    function _server_response(request, response) {
-        (in_.api.filter(request) ? _api : _static).request(request, response);
-    }
-    console.log('listen :' + in_.conf.port);
+    rest.init();
+    assets.init();
+
+    http.createServer(_server_response).listen(conf.port);
+    console.log('listen :' + conf.port);
+}
+
+function _server_response(request, response) {
+    (_api_conf.filter(request) ? rest : assets).request(request, response);
 }

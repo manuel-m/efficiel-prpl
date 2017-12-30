@@ -4,8 +4,8 @@ export { Used_CSS_extractor };
 
 function Used_CSS_extractor() {
     var _all = [],
-        not_used = [],
-        used = [];
+        _not_used = [],
+        _used = [];
 
     return {
         onStart: onStart,
@@ -16,7 +16,6 @@ function Used_CSS_extractor() {
     function onStart(automation) {
         return new Promise(function(resolve, reject) {
             var _styleSheet, _cssRule;
-
             console.log('onStart', document.styleSheets.length);
             for (var i = 0, i_n = document.styleSheets.length; i < i_n; i++) {
                 _styleSheet = document.styleSheets[i];
@@ -32,7 +31,7 @@ function Used_CSS_extractor() {
                     });
                 }
             }
-            not_used = clone(_all);
+            _not_used = clone(_all);
             resolve();
         });
     }
@@ -41,17 +40,15 @@ function Used_CSS_extractor() {
         return new Promise(function(resolve, reject) {
             var _extractedCount = -1,
                 _passCount = 0;
-
             console.log('step:' + step);
-
             while (_extractedCount !== 0) {
                 _extractedCount = 0;
-                not_used.forEach(function(cssRule_, index_) {
+                _not_used.forEach(function(cssRule_, index_) {
                     var _found = document.querySelector(cssRule_.selectorText);
                     if (_found !== null) {
                         _extractedCount += 1;
-                        used.push(clone(cssRule_));
-                        not_used.splice(index_, 1);
+                        _used.push(clone(cssRule_));
+                        _not_used.splice(index_, 1);
                     }
                 });
                 if (_extractedCount > 0) {
@@ -68,7 +65,7 @@ function Used_CSS_extractor() {
     function onEnd(automation) {
         return fetch('build/css', {
             method: 'PUT',
-            body: JSON.stringify({ used, not_used })
+            body: JSON.stringify({ used: _used, not_used: _not_used })
         }).then(function() {
             setTimeout(function() {
                 location.href = 'index.html';
