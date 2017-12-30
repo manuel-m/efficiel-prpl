@@ -1,5 +1,9 @@
+var fs = require('fs');
+
 import { clone } from '../../common/lib/utils';
 import { wrapResponse } from '../lib/helpers';
+
+import { conf } from '../lib/shared';
 
 var css = {
     critical: [],
@@ -32,7 +36,20 @@ function GET_build_css_used() {
 
 function PUT_build_css(data_) {
     Object.keys(css).forEach(function(k_) {
-        if (k_ in data_) css[k_] = clone(data_[k_]);
+        var _s;
+        if (k_ in data_) {
+            css[k_] = clone(data_[k_]);
+
+            fs.writeFileSync(
+                conf.dir_dist + '/assets/css/' + k_ + '.css',
+                css[k_].map(css_ => css_.cssText).join('\n'),
+                function(err_) {
+                    if (err_) {
+                        return console.log(err_);
+                    }
+                }
+            );
+        }
     });
 
     return wrapResponse(css);

@@ -3,17 +3,14 @@ var fs = require('fs-extra'),
     build_dir = 'build',
     dist_dir = 'dist';
 
-[
-    check_folders,
-    build_automation,
-    build_assets,
-    build_js,
-    build_admin_index,
-    build_dev_index,
-    build_used_css_index
-].forEach(function(task_) {
-    task_();
-});
+check_folders();
+build_automation();
+build_assets();
+build_js();
+build_admin_index();
+build_dev_index();
+build_tool_used_css_index();
+build_dev_used_css_index();
 
 function check_folders() {
     fs.ensureDirSync(build_dir);
@@ -40,45 +37,62 @@ function build_automation() {
 }
 
 function build_dev_index() {
-    fwrite(
-        build_dir + '/dev.index.html',
-        fread('index.html').replace(
-            '<!-- @script -->',
-            '<script src="js/app.critical.js"></script>'
-        )
-    );
+    fmultiSubstitutions({
+        input: 'index.html',
+        output: build_dir + '/dev.index.html',
+        substitutions: [
+            {
+                before: '<!-- @script -->',
+                after: '<script src="js/app.critical.js"></script>'
+            },
+            {
+                before: '<!-- @css -->',
+                after: '<link href="assets/css/style.css" rel="stylesheet">'
+            }
+        ]
+    });
 }
 
 function build_js() {
     shell('./node_modules/.bin/rollup -c --environment build:production');
 }
 
-function build_used_css_index() {
-    fwrite(
-        build_dir + '/used_css.index.html',
-        fread('index.html').replace(
-            '<!-- @script -->',
-            ['app.critical.js', 'tool.used_css.js'].reduce(function(s_, file_) {
-                return s_ + '<script src="/js/' + file_ + '">' + '</script>';
-            }, '')
-        )
-    );
-
-    // var _critical_js = fread(_build_dir + '/js/app.critical.js'),
-    //     _index_html = fread('index.html'),
-    //     _play_js = fread(_build_dir + '/js/tool.used_css.js');
-
-    // fwrite(
-    //     _build_dir + '/index.html',
-    //     _index_html.replace(
-    //         '<!-- @script -->',
-    //         [
-    //             '<script>' + _critical_js + '</script>',
-    //             '<script>' + _play_js + '</script>'
-    //         ].join('\n')
-    //     )
-    // );
+function build_tool_used_css_index() {
+    fmultiSubstitutions({
+        input: 'index.html',
+        output: build_dir + '/tool.used_css.index.html',
+        substitutions: [
+            {
+                before: '<!-- @script -->',
+                after:
+                    '<script src="js/app.critical.js"></script>' +
+                    '<script src="js/tool.used_css.js"></script>'
+            },
+            {
+                before: '<!-- @css -->',
+                after: '<link href="assets/css/style.css" rel="stylesheet">'
+            }
+        ]
+    });
 }
+
+function build_dev_used_css_index() {
+    fmultiSubstitutions({
+        input: 'index.html',
+        output: build_dir + '/dev.used_css.index.html',
+        substitutions: [
+            {
+                before: '<!-- @script -->',
+                after: '<script src="js/app.critical.js"></script>'
+            },
+            {
+                before: '<!-- @css -->',
+                after: '<link href="assets/css/used.css" rel="stylesheet">'
+            }
+        ]
+    });
+}
+
 function fconcat(sources_, destination_) {
     var _concat = '';
     sources_.forEach(function(source_) {
@@ -90,6 +104,16 @@ function fconcat(sources_, destination_) {
 function fcopyDir(source_, destination_) {
     fs.removeSync(destination_);
     fs.copySync(source_, destination_);
+}
+
+function fmultiSubstitutions(in_) {
+    var _text = fread(in_.input);
+
+    in_.substitutions.forEach(function(v_) {
+        _text = _text.replace(v_.before, v_.after);
+    });
+
+    fwrite(in_.output, _text);
 }
 
 function fread(path_) {
