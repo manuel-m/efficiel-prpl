@@ -1,0 +1,12 @@
+{
+    "automation": {
+        "delay_ms": 1000,
+        "path": "automations/critical.auto.json",
+        "max_fails": 5
+    },
+    "css": {
+        "directory": "assets/css"
+    },
+    "port": 8000,
+    "root": "./build"
+}

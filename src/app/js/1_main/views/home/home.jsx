@@ -15,7 +15,7 @@ export default function _home_view(Surplus, context_) {
                         href="#"
                         class="btn btn-primary"
                         onclick={function() {
-                            context_.go('profile');
+                            document.location.hash = 'profile';
                         }}
                     >
                         Profile

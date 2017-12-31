@@ -69,6 +69,7 @@ function clic(selector_, resolve, reject) {
                 _remainingTries -= 1;
                 setTimeout(_processClic, _delay_ms);
             } else {
+                console.error('invalid selector' + selector_);
                 reject();
             }
         } else {

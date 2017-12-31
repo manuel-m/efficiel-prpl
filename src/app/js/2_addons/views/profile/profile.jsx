@@ -105,7 +105,7 @@ function _profile_card1(Surplus, context_) {
                     href="#"
                     class="btn btn-primary"
                     onclick={function() {
-                        context_.go('home');
+                        document.location.hash = 'home';
                     }}
                 >
                     back

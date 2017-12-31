@@ -3,9 +3,14 @@ import * as Surplus from 'surplus';
 
 var go = S.data();
 
-export { go, routerView };
+export { routerView };
 
-function routerView(in_) {
-    go(in_.defaultRoute);
-    return <div>{in_.routes[go()]}</div>;
+function routerView(onHashChange, routes) {
+    window.addEventListener('hashchange', function(e_) {
+        go(onHashChange(e_.oldURL, e_.oldURL));
+    });
+
+    go(onHashChange(undefined, document.location.href));
+
+    return <div>{routes[go()]}</div>;
 }
