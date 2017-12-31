@@ -24,7 +24,8 @@ export default {
 function _on_router_api_request(request, response) {
     var _bodyContent;
 
-    if (request.method === 'POST' || request.method === 'PUT') {
+    // POST || PUT
+    if (request.method[0] === 'P') {
         _bodyContent = '';
         request.on('data', function(data) {
             _bodyContent += data;
