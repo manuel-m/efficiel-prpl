@@ -12,27 +12,10 @@ var css = {
 };
 
 export default {
-    GET: {
-        '/build/css': GET_build_css,
-        '/build/css/used': GET_build_css_used,
-        '/build/css/not_used': GET_build_css_not_used
-    },
     PUT: {
         '/build/css': PUT_build_css
     }
 };
-
-function GET_build_css() {
-    return wrapResponse(css);
-}
-
-function GET_build_css_not_used() {
-    return wrapResponse(css.not_used);
-}
-
-function GET_build_css_used() {
-    return wrapResponse(css.used);
-}
 
 function PUT_build_css(data_) {
     Object.keys(css).forEach(function(k_) {
@@ -41,7 +24,7 @@ function PUT_build_css(data_) {
             css[k_] = clone(data_[k_]);
 
             fs.writeFileSync(
-                conf.dir_dist + '/assets/css/' + k_ + '.css',
+                conf.root + '/' + conf.css.directory + '/' + k_ + '.css',
                 css[k_].map(css_ => css_.cssText).join('\n'),
                 function(err_) {
                     if (err_) {

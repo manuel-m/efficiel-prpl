@@ -16,7 +16,7 @@ export default [
 
 function APP_CRITICAL_JS() {
     return {
-        input: './front/app/js/0_critical/index.js',
+        input: './src/app/js/0_critical/index.js',
         output: {
             name: 'app',
             format: 'iife',
@@ -28,7 +28,7 @@ function APP_CRITICAL_JS() {
 
 function APP_ADDONS_JS() {
     return {
-        input: './front/app/js/2_addons/index.js',
+        input: './src/app/js/2_addons/index.js',
         output: {
             format: 'iife',
             file: _outputDir + '/app.addons.js'
@@ -39,7 +39,7 @@ function APP_ADDONS_JS() {
 
 function APP_MAIN_JS() {
     return {
-        input: './front/app/js/1_main/index.js',
+        input: './src/app/js/1_main/index.js',
         output: {
             name: 'app',
             format: 'iife',

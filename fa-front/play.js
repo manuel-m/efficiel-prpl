@@ -1,6 +1,8 @@
 export { play };
 
-var _m,
+var _delay_ms,
+    _max_fails,
+    _m,
     _module,
     reactors = {
         clic: clic
@@ -8,6 +10,8 @@ var _m,
 
 function play(in_) {
     _module = in_.module;
+    _delay_ms = in_.automation.delay_ms;
+    _max_fails = in_.automation.max_fails;
     return fetch(in_.automation.path)
         .then(function(payload_) {
             return payload_.json();
@@ -42,7 +46,7 @@ function _play_run() {
 
 function _play_next() {
     if (_m.sequence.length > 0) {
-        setTimeout(_play_run, _m.conf.delay_ms);
+        setTimeout(_play_run, _delay_ms);
     } else {
         _play_end();
     }
@@ -54,7 +58,7 @@ function _play_end() {
 
 function clic(selector_, resolve, reject) {
     var _node,
-        _remainingTries = _m.conf.max_fails;
+        _remainingTries = _max_fails;
 
     _processClic();
 
@@ -63,7 +67,7 @@ function clic(selector_, resolve, reject) {
         if (_node === null) {
             if (_remainingTries > 0) {
                 _remainingTries -= 1;
-                setTimeout(_processClic, _m.conf.delay_ms);
+                setTimeout(_processClic, _delay_ms);
             } else {
                 reject();
             }

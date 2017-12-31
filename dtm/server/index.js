@@ -1,18 +1,20 @@
-import cssCtrl from './css.ctrl';
+var fs = require('fs');
 
+import cssCtrl from './css.ctrl';
+import confCtrl from './conf.ctrl';
 import server from '../../fa-server/index';
 
 server({
     api: {
         filter: req_ => req_.url.indexOf('/build') === 0
     },
-    conf: {
-        port:
-            process.argv.indexOf('-p') >= 0
-                ? process.argv[process.argv.indexOf('-p') + 1]
-                : 8000,
-        dir_dist: './build',
-        encoding: 'utf-8'
-    },
-    controllers: { cssCtrl }
+    conf: Object.assign(
+        {
+            port: 8000,
+            root: './build',
+            encoding: 'utf-8'
+        },
+        JSON.parse(fs.readFileSync('./dtm.json', 'utf8'))
+    ),
+    controllers: { cssCtrl, confCtrl }
 });

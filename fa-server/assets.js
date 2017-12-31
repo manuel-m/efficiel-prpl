@@ -8,7 +8,7 @@ export default {
     request: _on_router_static_request
 };
 
-var _dist,
+var _root,
     _encoding,
     mimeTypes = {
         '.html': 'text/html',
@@ -28,13 +28,13 @@ var _dist,
     };
 
 function _router_static_init() {
-    _dist = conf.dir_dist;
+    _root = conf.root;
     _encoding = conf.encoding;
 }
 
 function _on_router_static_request(request, response) {
     var _url = url.parse(request.url, true).pathname,
-        _filePath = _dist + (_url === '/' ? '/index.html' : _url),
+        _filePath = _root + (_url === '/' ? '/index.html' : _url),
         _extname = String(path.extname(_filePath)).toLowerCase(),
         _contentType = mimeTypes[_extname] || 'application/octet-stream';
 

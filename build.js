@@ -4,6 +4,7 @@ var fs = require('fs-extra'),
     dist_dir = 'dist';
 
 check_folders();
+
 build_automation();
 build_assets();
 build_js();
@@ -22,7 +23,7 @@ function build_admin_index() {
 }
 
 function build_assets() {
-    var _source = 'front/app/assets/css',
+    var _source = 'src/app/assets/css',
         _dest = build_dir + '/assets/css';
     fs.ensureDirSync(_dest);
 
@@ -33,7 +34,7 @@ function build_assets() {
 }
 
 function build_automation() {
-    fcopyDir('front/app/automations', build_dir + '/automations');
+    fcopyDir('src/app/automations', build_dir + '/automations');
 }
 
 function build_dev_index() {
