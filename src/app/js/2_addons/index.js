@@ -3,11 +3,7 @@ import profile from './views/profile/profile';
 
 var _app = shared(),
     addonsRoutes = {
-        profile: profile(_app.Surplus, {
-            go: _app.go,
-            model: _app.model,
-            vm: _app.vm
-        })
+        profile: profile(_app.Surplus, _app.context)
     };
 
 addons({ routes: addonsRoutes });

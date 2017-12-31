@@ -14,9 +14,8 @@ export default function _home_view(Surplus, context_) {
                     <a
                         href="#"
                         class="btn btn-primary"
-                        onclick={function() {
-                            document.location.hash = 'profile';
-                        }}
+                        data-nav="profile"
+                        onclick={context_.onClickNav}
                     >
                         Profile
                     </a>

@@ -104,9 +104,8 @@ function _profile_card1(Surplus, context_) {
                 <a
                     href="#"
                     class="btn btn-primary"
-                    onclick={function() {
-                        document.location.hash = 'home';
-                    }}
+                    data-nav="home"
+                    onclick={context_.onClickNav}
                 >
                     back
                 </a>

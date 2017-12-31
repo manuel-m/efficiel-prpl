@@ -5,12 +5,16 @@ var go = S.data();
 
 export { routerView };
 
-function routerView(onHashChange, routes) {
+function routerView(defaultRoute, onHashChange, routes) {
     window.addEventListener('hashchange', function(e_) {
         go(onHashChange(e_.oldURL, e_.oldURL));
     });
 
-    go(onHashChange(undefined, document.location.href));
+    if (document.location.hash === '') {
+        document.location.hash = defaultRoute;
+    } else {
+        go(onHashChange(undefined, document.location.href));
+    }
 
     return <div>{routes[go()]}</div>;
 }

@@ -1,6 +1,6 @@
 function addons(in_) {
     var _shared = shared();
-    Object.assign(_shared.routes, in_.routes);
+    Object.assign(_shared.context.routes, in_.routes);
 }
 
 function shared() {
