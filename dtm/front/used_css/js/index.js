@@ -1,4 +1,4 @@
-import { play } from '../../../lib/play';
+import { play } from '../../../../fa-front/play';
 import { Used_CSS_extractor } from './used_css_extractor';
 
 play({

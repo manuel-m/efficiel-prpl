@@ -1,8 +1,8 @@
 import S from 's-js';
 import * as Surplus from 'surplus';
 
-import { main } from '../../../lib/main';
-import { go } from '../../../lib/router';
+import { main } from '../../../../fa-front/main';
+import { go } from '../../../../fa-front/router';
 
 import home from './views/home/home.jsx';
 

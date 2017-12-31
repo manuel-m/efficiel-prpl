@@ -18,7 +18,7 @@ function check_folders() {
 }
 
 function build_admin_index() {
-    fs.copySync('front/tools/admin/index.html', build_dir + '/index.html');
+    fs.copySync('dtm/index.html', build_dir + '/index.html');
 }
 
 function build_assets() {

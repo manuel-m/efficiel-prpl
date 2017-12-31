@@ -1,4 +1,4 @@
-import { clone } from '../../../../common/lib/utils';
+import { clone } from '../../../../fa/utils';
 
 export { Used_CSS_extractor };
 

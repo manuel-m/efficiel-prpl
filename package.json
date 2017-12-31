@@ -5,9 +5,9 @@
     "main": "index.js",
     "scripts": {
         "dev": "node ./build.js && rollup -c -w --environment build:dev",
-        "build": "node ./build.js",
-        "debug:devserver": "nodemon ./build/js/devserver.js",
-        "test": "node ./build/js/devserver.js"
+        "build": "node ./build.js && node ./build/js/dtm.server.js",
+        "dtm-debug": "nodemon ./build/js/dtm.server.js",
+        "dtm": "node ./build/js/dtm.server.js"
     },
     "author": "Efficiel Technologie",
     "license": "MIT",

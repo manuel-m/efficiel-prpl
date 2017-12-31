@@ -1,4 +1,4 @@
-import { addons, shared } from '../../../lib/addons';
+import { addons, shared } from '../../../../fa-front/addons';
 import profile from './views/profile/profile';
 
 var _app = shared(),

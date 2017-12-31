@@ -1,6 +1,6 @@
-import cssCtrl from './app/css.ctrl';
+import cssCtrl from './css.ctrl';
 
-import server from './lib/index';
+import server from '../../fa-server/index';
 
 server({
     api: {

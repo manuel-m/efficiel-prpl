@@ -10,8 +10,8 @@ export default [
     APP_CRITICAL_JS(),
     APP_MAIN_JS(),
     APP_ADDONS_JS(),
-    DEVSERVER_JS(),
-    TOOL_USED_CSS()
+    DTM_SERVER_JS(),
+    DTM_USED_CSS_JS()
 ];
 
 function APP_CRITICAL_JS() {
@@ -49,11 +49,11 @@ function APP_MAIN_JS() {
     };
 }
 
-function DEVSERVER_JS() {
+function DTM_SERVER_JS() {
     return {
-        input: './devserver/index.js',
+        input: './dtm/server/index.js',
         output: {
-            file: _outputDir + '/devserver.js',
+            file: _outputDir + '/dtm.server.js',
             format: 'cjs',
             name: 'devserver'
         },
@@ -91,9 +91,9 @@ function DEVSERVER_JS() {
     };
 }
 
-function TOOL_USED_CSS() {
+function DTM_USED_CSS_JS() {
     return {
-        input: './front/tools/used_css/js/index.js',
+        input: './dtm/front/used_css/js/index.js',
         output: {
             name: 'used_css',
             format: 'iife',
