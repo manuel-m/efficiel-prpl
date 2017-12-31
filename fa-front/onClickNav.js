@@ -1,7 +1,7 @@
 export default function(e_) {
     var _el = e_.target,
         _nav;
-    e_.stopImmediatePropagation();
+    e_.stopPropagation();
     while (_el !== null && _nav === undefined) {
         _nav = _el.dataset.nav;
         if (_nav === undefined) {

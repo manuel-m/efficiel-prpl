@@ -101,12 +101,7 @@ function _profile_card1(Surplus, context_) {
                     up the bulk of the card's content.
                 </p>
                 <pre>{JSON.stringify(context_, undefined, 2)}</pre>
-                <a
-                    href="#"
-                    class="btn btn-primary"
-                    data-nav="home"
-                    onclick={context_.onClickNav}
-                >
+                <a href="#home" class="btn btn-primary">
                     back
                 </a>
             </div>

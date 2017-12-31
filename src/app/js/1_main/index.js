@@ -23,10 +23,19 @@ main({
     routes: routes
 });
 
-function _onHashChange(oldUrl_, newUrl_) {
-    var _hash = newUrl_.split('#')[1];
+function _onHashChange(e_) {
+    var _hash = (e_ === undefined ? document.location.href : e_.newURL).split(
+        '#'
+    )[1];
 
-    return _hash === '' ? 'home' : _hash;
+    if (_hash in routes === false) {
+        console.log('route not ready:' + _hash);
+        return 'home';
+    }
+
+    return _hash === '' || _hash === undefined || _hash in routes === false
+        ? 'home'
+        : _hash;
 }
 
-export { Surplus, context }; // [!] for addons part
+export { Surplus, context };

@@ -1,20 +1,23 @@
 import S from 's-js';
 import * as Surplus from 'surplus';
 
-var go = S.data();
+var go;
 
 export { routerView };
 
-function routerView(defaultRoute, onHashChange, routes) {
-    window.addEventListener('hashchange', function(e_) {
-        go(onHashChange(e_.oldURL, e_.oldURL));
-    });
+function routerView(defaultRoute, onHashChange_, routes) {
+    go = S.data(defaultRoute);
 
-    if (document.location.hash === '') {
-        document.location.hash = defaultRoute;
-    } else {
-        go(onHashChange(undefined, document.location.href));
+    if (document.location.hash !== '') {
+        // [!] to remove
+        setTimeout(function() {
+            go(onHashChange_());
+        }, 300);
     }
+
+    window.addEventListener('hashchange', function(e_) {
+        go(onHashChange_(e_));
+    });
 
     return <div>{routes[go()]}</div>;
 }

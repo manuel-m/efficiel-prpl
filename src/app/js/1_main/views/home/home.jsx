@@ -11,12 +11,7 @@ export default function _home_view(Surplus, context_) {
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
                     </p>
-                    <a
-                        href="#"
-                        class="btn btn-primary"
-                        data-nav="profile"
-                        onclick={context_.onClickNav}
-                    >
+                    <a href="#profile" class="btn btn-primary">
                         Profile
                     </a>
                 </div>
