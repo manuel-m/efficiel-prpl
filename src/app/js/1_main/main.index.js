@@ -2,22 +2,20 @@ import S from 's-js';
 import * as Surplus from 'surplus';
 
 import { main } from '../../../../m-front/main';
-import onClickNav from '../../../../m-front/onClickNav';
+// import onClickNav from '../../../../m-front/onClickNav';
 
 import home from './views/home/home.jsx';
 
 var context = {
-        S: S,
-        Surplus: Surplus,
-        model: {},
-        onClickNav: onClickNav,
-        vm: { clic: 0, message: S.data('Click me') }
+    S: S,
+    Surplus: Surplus,
+    model: {},
+    // onClickNav: onClickNav,
+    routes: {
+        home: home
     },
-    routes = {
-        home: home(Surplus, context)
-    };
-
-context.routes = routes;
+    vm: { clic: 0, message: S.data('Click me') }
+};
 
 main({
     addonsScript: 'js/app.addons.js',
@@ -32,14 +30,16 @@ function _onHashChange(e_) {
         '#'
     )[1];
 
-    if (_hash in routes === false) {
+    if (_hash in context.routes === false) {
         console.log('route not ready:' + _hash);
         return 'home';
     }
 
-    return _hash === '' || _hash === undefined || _hash in routes === false
+    return _hash === '' ||
+        _hash === undefined ||
+        _hash in context.routes === false
         ? 'home'
         : _hash;
 }
 
-export { Surplus, context };
+export { context };
