@@ -2,7 +2,7 @@ var fs = require('fs');
 
 import cssCtrl from './css.ctrl';
 import confCtrl from './conf.ctrl';
-import server from '../../fa-server/index';
+import server from '../../fa-server/fa-server.index';
 
 server({
     api: {

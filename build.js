@@ -19,7 +19,7 @@ function check_folders() {
 }
 
 function build_admin_index() {
-    fs.copySync('dtm/index.html', build_dir + '/index.html');
+    fs.copySync('dtm/dtm.index.html', build_dir + '/index.html');
 }
 
 function build_assets() {
@@ -27,6 +27,10 @@ function build_assets() {
         _dest = build_dir + '/assets/css';
     fs.ensureDirSync(_dest);
 
+    // dtm admin
+    fs.copySync(_source + '/bootstrap.css', _dest + '/bootstrap.css');
+
+    // app
     fconcat(
         [_source + '/bootstrap.css', _source + '/app.css'],
         _dest + '/style.css'

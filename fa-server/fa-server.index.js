@@ -2,8 +2,8 @@ var http = require('http');
 
 import { conf, controllers } from './shared';
 
-import assets from './assets';
-import rest from './rest';
+import routerStatic from './router.static';
+import routerApi from './router.api';
 
 var _api_conf;
 
@@ -13,13 +13,16 @@ export default function(in_) {
 
     _api_conf = in_.api;
 
-    rest.init();
-    assets.init();
+    routerApi.init();
+    routerStatic.init();
 
     http.createServer(_server_response).listen(conf.port);
     console.log('listen :' + conf.port);
 }
 
 function _server_response(request, response) {
-    (_api_conf.filter(request) ? rest : assets).request(request, response);
+    (_api_conf.filter(request) ? routerApi : routerStatic).request(
+        request,
+        response
+    );
 }

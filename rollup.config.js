@@ -16,7 +16,7 @@ export default [
 
 function APP_CRITICAL_JS() {
     return {
-        input: './src/app/js/0_critical/index.js',
+        input: './src/app/js/0_critical/critical.index.js',
         output: {
             name: 'app',
             format: 'iife',
@@ -28,7 +28,7 @@ function APP_CRITICAL_JS() {
 
 function APP_ADDONS_JS() {
     return {
-        input: './src/app/js/2_addons/index.js',
+        input: './src/app/js/2_addons/addons.index.js',
         output: {
             format: 'iife',
             file: _outputDir + '/app.addons.js'
@@ -39,7 +39,7 @@ function APP_ADDONS_JS() {
 
 function APP_MAIN_JS() {
     return {
-        input: './src/app/js/1_main/index.js',
+        input: './src/app/js/1_main/main.index.js',
         output: {
             name: 'app',
             format: 'iife',
@@ -51,9 +51,9 @@ function APP_MAIN_JS() {
 
 function DTM_SERVER_JS() {
     return {
-        input: './dtm/server/index.js',
+        input: './dtm/server/dtm-server.index.js',
         output: {
-            file: _outputDir + '/dtm.server.js',
+            file: _outputDir + '/dtm-server.js',
             format: 'cjs',
             name: 'devserver'
         },
@@ -93,7 +93,7 @@ function DTM_SERVER_JS() {
 
 function DTM_USED_CSS_JS() {
     return {
-        input: './dtm/front/used_css/js/index.js',
+        input: './dtm/front/used_css/js/used_css.index.js',
         output: {
             name: 'used_css',
             format: 'iife',
