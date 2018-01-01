@@ -39,11 +39,11 @@ function APP_ADDONS_JS() {
 
 function APP_MAIN_JS() {
     return {
-        input: './src/app/js/1_main/main.index.js',
+        input: './src/app/js/1_app/app.index.js',
         output: {
             name: 'app',
             format: 'iife',
-            file: _outputDir + '/app.main.js'
+            file: _outputDir + '/app.js'
         },
         plugins: front_tasks()
     };

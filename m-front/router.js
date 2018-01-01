@@ -10,10 +10,9 @@ function routerView(in_) {
     if (document.location.hash === '') {
         _routes[_route] = in_.context.routes[_route](Surplus, in_.context);
     } else {
-        // [!] need to wait for additionnal route to be ready
-        _route = in_.onHashChange(in_.context);
-
         setTimeout(function() {
+            // [!] need to wait for additionnal route to be ready
+            _route = in_.onHashChange(in_.context);
             _routes[_route] = in_.context.routes[_route](Surplus, in_.context);
             go(_route);
         }, 300);
