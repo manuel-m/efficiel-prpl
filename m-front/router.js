@@ -10,8 +10,9 @@ function routerView(in_) {
     if (document.location.hash === '') {
         _routes[_route] = in_.context.routes[_route](Surplus, in_.context);
     } else {
-        _route = in_.onHashChange();
         // [!] need to wait for additionnal route to be ready
+        _route = in_.onHashChange(in_.context);
+
         setTimeout(function() {
             _routes[_route] = in_.context.routes[_route](Surplus, in_.context);
             go(_route);
@@ -19,14 +20,14 @@ function routerView(in_) {
     }
 
     window.addEventListener('hashchange', function(e_) {
-        _route = in_.onHashChange(e_);
+        _route = in_.onHashChange(in_.context, e_);
 
         // [!] create view on need
         if (_route in _routes === false) {
             _routes[_route] = in_.context.routes[_route](Surplus, in_.context);
         }
 
-        go(in_.onHashChange(e_));
+        go(in_.onHashChange(in_.context, e_));
     });
 
     return <div>{_routes[go()]}</div>;
