@@ -18,10 +18,14 @@ function App(in_) {
     Object.assign(__context.model, in_.model(__context));
     Object.assign(__context.vm, in_.vm(__context));
 
+    __context.loadAddons = new Promise(function(resolve) {
+        __context.loadAddons_resolve = resolve;
+    });
+
     _routerView = routerView({
         context: __context,
-        onHashChange: in_.onHashChange,
-        defaultRoute: in_.defaultRoute
+        defaultRoute: in_.defaultRoute,
+        onHashChange: in_.onHashChange
     });
 
     window.requestAnimationFrame(function() {

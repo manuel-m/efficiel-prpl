@@ -6,27 +6,30 @@ function routerView(in_) {
         _routes = {},
         go = in_.context.S.data(_route);
 
-    // default route
+    // start with default route
     if (document.location.hash === '') {
         _routes[_route] = in_.context.routes[_route](Surplus, in_.context);
     } else {
-        setTimeout(function() {
-            // [!] need to wait for additionnal route to be ready
+        // start with addon route
+        in_.context.loadAddons.then(function() {
             _route = in_.onHashChange(in_.context);
             _routes[_route] = in_.context.routes[_route](Surplus, in_.context);
             go(_route);
-        }, 300);
+        });
     }
 
     window.addEventListener('hashchange', function(e_) {
-        _route = in_.onHashChange(in_.context, e_);
-
-        // [!] create view on need
-        if (_route in _routes === false) {
-            _routes[_route] = in_.context.routes[_route](Surplus, in_.context);
-        }
-
-        go(in_.onHashChange(in_.context, e_));
+        in_.context.loadAddons.then(function() {
+            _route = in_.onHashChange(in_.context, e_);
+            if (_route in _routes === false) {
+                // [!] create view on need
+                _routes[_route] = in_.context.routes[_route](
+                    Surplus,
+                    in_.context
+                );
+            }
+            go(in_.onHashChange(in_.context, e_));
+        });
     });
 
     return <div>{_routes[go()]}</div>;
