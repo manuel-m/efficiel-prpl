@@ -3,11 +3,11 @@ import { routerView } from './router';
 
 function main(in_) {
     var _static = document.getElementById(in_.mountId),
-        _routerView = routerView(
-            in_.defaultRoute,
-            in_.onHashChange,
-            in_.routes
-        );
+        _routerView = routerView({
+            context: in_.context,
+            onHashChange: in_.onHashChange,
+            defaultRoute: in_.defaultRoute
+        });
 
     window.requestAnimationFrame(function() {
         _static.parentNode.replaceChild(_routerView, _static);

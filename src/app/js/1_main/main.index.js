@@ -6,9 +6,13 @@ import onClickNav from '../../../../m-front/onClickNav';
 
 import home from './views/home/home.jsx';
 
-var model = {},
-    vm = { clic: 0, route: '/', message: S.data('Click me') },
-    context = { S: S, model: model, onClickNav: onClickNav, vm: vm },
+var context = {
+        S: S,
+        Surplus: Surplus,
+        model: {},
+        onClickNav: onClickNav,
+        vm: { clic: 0, message: S.data('Click me') }
+    },
     routes = {
         home: home(Surplus, context)
     };
@@ -17,10 +21,10 @@ context.routes = routes;
 
 main({
     addonsScript: 'js/app.addons.js',
+    context: context,
     defaultRoute: 'home',
     mountId: 'app',
-    onHashChange: _onHashChange,
-    routes: routes
+    onHashChange: _onHashChange
 });
 
 function _onHashChange(e_) {
