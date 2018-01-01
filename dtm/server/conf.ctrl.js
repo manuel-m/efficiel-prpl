@@ -1,5 +1,5 @@
-import { conf } from '../../fa-server/shared';
-import { wrapResponse } from '../../fa-server/helpers';
+import { conf } from '../../m-server/shared';
+import { wrapResponse } from '../../m-server/helpers';
 
 export default {
     GET: {

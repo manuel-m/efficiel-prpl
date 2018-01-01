@@ -1,5 +1,5 @@
-import { fetch_json } from '../../../../fa/utils';
-import { play } from '../../../../fa-front/play';
+import { fetch_json } from '../../../../m/utils';
+import { play } from '../../../../m-front/play';
 import { Used_CSS_extractor } from './used_css_extractor';
 
 fetch('build/conf')

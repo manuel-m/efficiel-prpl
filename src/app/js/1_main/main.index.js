@@ -1,8 +1,8 @@
 import S from 's-js';
 import * as Surplus from 'surplus';
 
-import { main } from '../../../../fa-front/main';
-import onClickNav from '../../../../fa-front/onClickNav';
+import { main } from '../../../../m-front/main';
+import onClickNav from '../../../../m-front/onClickNav';
 
 import home from './views/home/home.jsx';
 

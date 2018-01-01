@@ -1,9 +1,9 @@
 var fs = require('fs');
 
-import { clone } from '../../fa/utils';
-import { wrapResponse } from '../../fa-server/helpers';
+import { clone } from '../../m/utils';
+import { wrapResponse } from '../../m-server/helpers';
 
-import { conf } from '../../fa-server/shared';
+import { conf } from '../../m-server/shared';
 
 var css = {
     critical: [],
