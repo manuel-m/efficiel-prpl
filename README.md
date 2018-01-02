@@ -11,7 +11,6 @@ npm install
 **Build**
 
 ```
-// Generate build in `dist` folder
 npm run build
 ```
 
