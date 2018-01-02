@@ -12,7 +12,8 @@ export default [
     APP_ADDONS_JS(),
     DTM_SERVER_JS(),
     DTM_USED_CSS_JS(),
-    DTM_CRITICAL_CSS_JS()
+    DTM_CRITICAL_CSS_JS(),
+    DTM_STATIC_HTML_JS()
 ];
 
 function APP_CRITICAL_JS() {
@@ -111,6 +112,18 @@ function DTM_CRITICAL_CSS_JS() {
             name: 'used_css',
             format: 'iife',
             file: _outputDir + '/tool.critical_css.js'
+        },
+        plugins: front_tasks()
+    };
+}
+
+function DTM_STATIC_HTML_JS() {
+    return {
+        input: './dtm/front/static_html/js/static_html.index.js',
+        output: {
+            name: 'static_html',
+            format: 'iife',
+            file: _outputDir + '/tool.static_html.js'
         },
         plugins: front_tasks()
     };

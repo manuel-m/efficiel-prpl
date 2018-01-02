@@ -10,6 +10,10 @@
             "delay_ms": 4000
         }
     },
+    "mountId": "app",
+    "static_html": {
+        "delay_ms": 4000
+    },
     "port": 8000,
     "root": "./build"
 }

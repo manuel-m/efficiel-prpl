@@ -1,7 +1,6 @@
 var fs = require('fs-extra'),
     child_process = require('child_process'),
-    build_dir = 'build',
-    dist_dir = 'dist';
+    build_dir = 'build';
 
 check_folders();
 
@@ -13,11 +12,12 @@ build_dev_index();
 build_tool_used_css_index();
 build_dev_used_css_index();
 build_tool_critical_css_index();
+build_tool_static_html_index();
 build_dev_critical_css_index();
+dist_index();
 
 function check_folders() {
     fs.ensureDirSync(build_dir);
-    fs.ensureDirSync(dist_dir);
 }
 
 function build_admin_index() {
@@ -114,6 +114,58 @@ function build_dev_critical_css_index() {
             {
                 before: '<!-- @css -->',
                 after: '<link href="assets/css/critical.css" rel="stylesheet">'
+            }
+        ]
+    });
+}
+
+function build_tool_static_html_index() {
+    fmultiSubstitutions({
+        input: 'index.html',
+        output: build_dir + '/tool.static_html.index.html',
+        substitutions: [
+            {
+                before: '<!-- @script -->',
+                after:
+                    '<script src="js/app.critical.js"></script>' +
+                    '<script src="js/tool.static_html.js"></script>'
+            },
+            {
+                before: '<!-- @css -->',
+                after: '<link href="assets/css/used.css" rel="stylesheet">'
+            }
+        ]
+    });
+}
+
+function dist_index() {
+    var _critical_js = build_dir + '/js/app.critical.js',
+        _critical_css = build_dir + '/assets/css/critical.css',
+        _static_html = build_dir + '/app.html';
+
+    if (fs.existsSync(_critical_js) === false) return;
+    if (fs.existsSync(_critical_css) === false) return;
+    if (fs.existsSync(_static_html) === false) return;
+
+    fmultiSubstitutions({
+        input: 'index.html',
+        output: build_dir + '/dist.index.html',
+        substitutions: [
+            {
+                before: '<div id="app" />',
+                after: '<div id="app">' + fread(_static_html) + '</div>'
+            },
+            {
+                before: '<!-- @script -->',
+                after: '<script>' + fread(_critical_js) + '</script>'
+            },
+            {
+                before: '<!-- @css -->',
+                after:
+                    '<style>' +
+                    fread(_critical_css) +
+                    '</style>' +
+                    '<link href="assets/css/not_critical.css" rel="stylesheet">'
             }
         ]
     });

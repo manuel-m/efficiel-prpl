@@ -1,7 +1,8 @@
 var fs = require('fs');
 
-import cssCtrl from './css.ctrl';
-import confCtrl from './conf.ctrl';
+import cssCtrl from './controllers/css.ctrl';
+import confCtrl from './controllers/conf.ctrl';
+import staticHtmlCtrl from './controllers/static_html.ctrl';
 import server from '../../m-server/m-server.index';
 
 server({
@@ -16,5 +17,5 @@ server({
         },
         JSON.parse(fs.readFileSync('./dtm.json', 'utf8'))
     ),
-    controllers: { cssCtrl, confCtrl }
+    controllers: { cssCtrl, confCtrl, staticHtmlCtrl }
 });
