@@ -7,6 +7,7 @@ import { conf } from '../../m-server/shared';
 
 var css = {
     critical: [],
+    not_critical: [],
     not_used: [],
     used: []
 };

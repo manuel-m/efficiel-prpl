@@ -12,6 +12,7 @@ build_admin_index();
 build_dev_index();
 build_tool_used_css_index();
 build_dev_used_css_index();
+build_tool_critical_css_index();
 
 function check_folders() {
     fs.ensureDirSync(build_dir);
@@ -76,6 +77,25 @@ function build_tool_used_css_index() {
             {
                 before: '<!-- @css -->',
                 after: '<link href="assets/css/style.css" rel="stylesheet">'
+            }
+        ]
+    });
+}
+
+function build_tool_critical_css_index() {
+    fmultiSubstitutions({
+        input: 'index.html',
+        output: build_dir + '/tool.critical_css.index.html',
+        substitutions: [
+            {
+                before: '<!-- @script -->',
+                after:
+                    '<script src="js/app.critical.js"></script>' +
+                    '<script src="js/tool.critical_css.js"></script>'
+            },
+            {
+                before: '<!-- @css -->',
+                after: '<link href="assets/css/used.css" rel="stylesheet">'
             }
         ]
     });

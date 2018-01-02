@@ -11,7 +11,8 @@ export default [
     APP_MAIN_JS(),
     APP_ADDONS_JS(),
     DTM_SERVER_JS(),
-    DTM_USED_CSS_JS()
+    DTM_USED_CSS_JS(),
+    DTM_CRITICAL_CSS_JS()
 ];
 
 function APP_CRITICAL_JS() {
@@ -98,6 +99,18 @@ function DTM_USED_CSS_JS() {
             name: 'used_css',
             format: 'iife',
             file: _outputDir + '/tool.used_css.js'
+        },
+        plugins: front_tasks()
+    };
+}
+
+function DTM_CRITICAL_CSS_JS() {
+    return {
+        input: './dtm/front/critical_css/js/critical_css.index.js',
+        output: {
+            name: 'used_css',
+            format: 'iife',
+            file: _outputDir + '/tool.critical_css.js'
         },
         plugins: front_tasks()
     };

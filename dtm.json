@@ -5,7 +5,10 @@
         "max_fails": 5
     },
     "css": {
-        "directory": "assets/css"
+        "directory": "assets/css",
+        "critical": {
+            "delay_ms": 4000
+        }
     },
     "port": 8000,
     "root": "./build"
