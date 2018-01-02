@@ -30,6 +30,7 @@ function App(in_) {
 
     window.requestAnimationFrame(function() {
         _static.parentNode.replaceChild(_routerView, _static);
+        _routerView.id = in_.mountId;
         _static = undefined;
 
         loadScript(in_.addonsScript);
