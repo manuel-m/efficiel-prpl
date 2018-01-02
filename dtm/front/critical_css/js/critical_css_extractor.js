@@ -30,25 +30,32 @@ function critical_CSS_extractor(conf_) {
 
     function _extract_critical() {
         var _extractedCount = -1,
+            _extractAlways = [':root', 'html', 'body'],
             _item,
             _items,
             _passCount = 0;
 
         while (_extractedCount !== 0) {
             _extractedCount = 0;
-            _not_critical.forEach(function(cssRule_, index_) {
-                _items = document.querySelectorAll(cssRule_.selectorText);
 
-                for (var i = 0, n = _items.length; i < n; i++) {
-                    _item = _items[i];
-                    if (
-                        'dtmcritical' in _item.dataset &&
-                        _item.dataset.dtmcritical === 'true'
-                    ) {
-                        _extractedCount += 1;
-                        _critical.push(clone(cssRule_));
-                        _not_critical.splice(index_, 1);
-                        return;
+            _not_critical.forEach(function(cssRule_, index_) {
+                if (_extractAlways.includes(cssRule_.selectorText) === true) {
+                    _extractedCount += 1;
+                    _critical.push(clone(cssRule_));
+                    _not_critical.splice(index_, 1);
+                } else {
+                    _items = document.querySelectorAll(cssRule_.selectorText);
+                    for (var i = 0, n = _items.length; i < n; i++) {
+                        _item = _items[i];
+                        if (
+                            'dtmcritical' in _item.dataset &&
+                            _item.dataset.dtmcritical === 'true'
+                        ) {
+                            _extractedCount += 1;
+                            _critical.push(clone(cssRule_));
+                            _not_critical.splice(index_, 1);
+                            return;
+                        }
                     }
                 }
             });
@@ -95,18 +102,4 @@ function critical_CSS_extractor(conf_) {
         }
         _not_critical = clone(_all);
     }
-
-    // function onEnd(automation) {
-    //     return fetch('build/css', {
-    //         method: 'PUT',
-    //         body: JSON.stringify({
-    //             critical: _critical,
-    //             not_critical: _not_critical
-    //         })
-    //     }).then(function() {
-    //         setTimeout(function() {
-    //             location.href = 'index.html';
-    //         }, automation.conf.delay_ms);
-    //     });
-    // }
 }
