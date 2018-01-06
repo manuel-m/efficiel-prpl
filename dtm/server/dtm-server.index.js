@@ -3,7 +3,7 @@ var fs = require('fs');
 import cssCtrl from './controllers/css.ctrl';
 import confCtrl from './controllers/conf.ctrl';
 import staticHtmlCtrl from './controllers/static_html.ctrl';
-import server from '../../m-server/m-server.index';
+import server from 'et-es/m-server/m-server.index';
 
 server({
     api: {

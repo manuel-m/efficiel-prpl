@@ -1,4 +1,4 @@
-import { fetch_json } from '../../../../m/utils';
+import { fetch_json } from 'et-es/m/utils';
 import { static_html_extractor } from './static_html_extractor';
 
 fetch('build/conf')

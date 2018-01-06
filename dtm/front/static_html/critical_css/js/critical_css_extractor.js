@@ -1,4 +1,4 @@
-import { clone } from '../../../../m/utils';
+import { clone } from 'et-es/m/utils';
 
 export { critical_CSS_extractor };
 

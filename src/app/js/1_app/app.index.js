@@ -1,4 +1,4 @@
-import { App } from '../../../../m-front/app';
+import { App } from 'et-es/m-front/app';
 
 import home from './views/home/home.jsx';
 

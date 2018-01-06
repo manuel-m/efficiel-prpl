@@ -1,7 +1,7 @@
 var fs = require('fs');
 
-import { wrapResponse } from '../../../m-server/helpers';
-import { conf } from '../../../m-server/shared';
+import { wrapResponse } from 'et-es/m-server/helpers';
+import { conf } from 'et-es/m-server/shared';
 
 export default {
     POST: {

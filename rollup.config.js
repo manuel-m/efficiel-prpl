@@ -61,6 +61,7 @@ function DTM_SERVER_JS() {
         },
         plugins: [
             eslint(),
+            resolve({ extensions: ['.js'] }),
             uglify(
                 {
                     compress: {
